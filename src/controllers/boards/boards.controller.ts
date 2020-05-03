@@ -1,4 +1,6 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { Board } from 'src/modes/Board';
 
 // TODO: 작업해야함.
 
@@ -68,6 +70,12 @@ const dummyData: Record<number, any> = {
 @Controller('boards')
 export class BoardsController {
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: '조회 성공',
+    type: [Board],
+  })
+  @ApiQuery({ name: 'page', type: Number })
   findAll(@Query() query): ApiResponse<typeof dummyData> {
     if (query.page) {
       return { data: dummyData[query.page] || [] };
