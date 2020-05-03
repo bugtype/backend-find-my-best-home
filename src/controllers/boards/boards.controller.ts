@@ -1,9 +1,8 @@
-import { Controller, Get, Param, Query, Res, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
-import { Board } from 'src/modes/Board';
+import { Controller, Get, Query } from '@nestjs/common';
+import { ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { Board } from 'models/Board';
 
 // TODO: 작업해야함.
-
 const dummyData: Record<number, any> = {
   1: [
     {
