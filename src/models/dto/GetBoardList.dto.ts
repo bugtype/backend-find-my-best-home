@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class Board {
+export class GetBoardsListDto {
   @ApiProperty()
   no!: number;
 
