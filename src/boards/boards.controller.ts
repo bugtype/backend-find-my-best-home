@@ -28,12 +28,16 @@ export class BoardsController {
   async findAll(@Query() query) {
     // validation
     if (query.page && Number.isInteger(Number(query.page))) {
-      return { data: await this.boardsService.findAllByPage(query.page) };
+      const boards = await await this.boardsService.findAllByPage(query.page);
+      if (boards.length) {
+        return { data: boards };
+      }
+      throw new HttpException(
+        '요청하신 데이터가 없습니다.',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    throw new HttpException(
-      'page 파라미터값을 확인해주세요.',
-      HttpStatus.BAD_REQUEST,
-    );
+    throw new HttpException('잘못된 요청입니다.', HttpStatus.BAD_REQUEST);
   }
 
   @Get(':no')
@@ -47,7 +51,14 @@ export class BoardsController {
   async findOne(@Param('no') no) {
     // validation
     if (no && Number.isInteger(Number(no))) {
-      return { data: await this.boardsService.findOne(no) };
+      const board = await this.boardsService.findOne(no);
+      if (board) {
+        return { data: board };
+      }
+      throw new HttpException(
+        '요청하신 데이터가 없습니다.',
+        HttpStatus.NOT_FOUND,
+      );
     }
     throw new HttpException('잘못된 요청입니다.', HttpStatus.BAD_REQUEST);
   }
