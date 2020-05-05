@@ -9,9 +9,14 @@ import {
 } from '@nestjs/common';
 
 import { BoardsService } from './boards.service';
-import { ApiResponse, ApiQuery, ApiBadRequestResponse } from '@nestjs/swagger';
-import { GetBoardsListDto } from 'models';
-import { Board } from './board.entity';
+import {
+  ApiResponse,
+  ApiQuery,
+  ApiBadRequestResponse,
+  ApiParam,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
+import { GetBoardsListDto, GetBoardDetailDto } from 'models';
 
 @Controller('boards')
 export class BoardsController {
@@ -25,8 +30,9 @@ export class BoardsController {
   })
   @ApiQuery({ name: 'page', type: Number })
   @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
   async findAll(@Query() query) {
-    // validation
+    // TODO: validation pipe
     if (query.page && Number.isInteger(Number(query.page))) {
       const boards = await await this.boardsService.findAllByPage(query.page);
       if (boards.length) {
@@ -44,12 +50,13 @@ export class BoardsController {
   @ApiResponse({
     status: 200,
     description: '조회 성공',
-    type: GetBoardsListDto,
+    type: GetBoardDetailDto,
   })
-  @ApiQuery({ name: 'page', type: Number })
+  @ApiParam({ name: 'no', type: Number })
   @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
   async findOne(@Param('no') no) {
-    // validation
+    // TODO: validation pipe
     if (no && Number.isInteger(Number(no))) {
       const board = await this.boardsService.findOne(no);
       if (board) {
