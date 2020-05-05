@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Board {
   @PrimaryGeneratedColumn()
-  no!: number;
+  id!: number;
 
   @Column()
   subject!: string;
