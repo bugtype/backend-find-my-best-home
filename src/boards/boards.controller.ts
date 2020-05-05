@@ -5,11 +5,13 @@ import {
   Query,
   HttpStatus,
   HttpException,
+  Param,
 } from '@nestjs/common';
 
 import { BoardsService } from './boards.service';
 import { ApiResponse, ApiQuery, ApiBadRequestResponse } from '@nestjs/swagger';
 import { GetBoardsListDto } from 'models';
+import { Board } from './board.entity';
 
 @Controller('boards')
 export class BoardsController {
@@ -32,6 +34,22 @@ export class BoardsController {
       'page 파라미터값을 확인해주세요.',
       HttpStatus.BAD_REQUEST,
     );
+  }
+
+  @Get(':no')
+  @ApiResponse({
+    status: 200,
+    description: '조회 성공',
+    type: GetBoardsListDto,
+  })
+  @ApiQuery({ name: 'page', type: Number })
+  @ApiBadRequestResponse()
+  async findOne(@Param('no') no) {
+    // validation
+    if (no && Number.isInteger(Number(no))) {
+      return { data: await this.boardsService.findOne(no) };
+    }
+    throw new HttpException('잘못된 요청입니다.', HttpStatus.BAD_REQUEST);
   }
 
   // TODO: 유저가 생성하도록 변경해야 한다.

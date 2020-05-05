@@ -14,6 +14,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
+  // TODO: 로깅처리 필요
+
   await app.listen(3000);
 }
 bootstrap();
