@@ -2,12 +2,11 @@
 
 - 구현중
 
-## TODO
+### Flow
 
-- Docker
-- CI/CD
-- DDD
-- CQRS, Event Sourcing
+![](docs/backend-flow.png)
+
+- 구현중
 
 ## 샘플 데이터
 
@@ -24,15 +23,16 @@ http://localhost:3000/api
 curl -X GET http://localhost:3000/boards?page=1
 ```
 
-## elk 연동
+## ELK 연동
 
 ### STEP 1
 
-https://github.com/deviantony/docker-elk 를 통해서 elk 를 구축한다.
+https://github.com/deviantony/docker-elk 를 통해서 ELK를 구축한다.
 
 ### STEP 2
 
-logstash에다가 filebeat 셋팅을 한다.( logstash.conf )
+- logstash에다가 filebeat 셋팅을 한다.( logstash.conf )
+- **Expose 포트** 확인
 
 ```
 input {
@@ -45,3 +45,12 @@ input {
 }
 
 ```
+
+## TODO
+
+- CI/CD
+- DDD
+- CQRS, Event Sourcing
+- Cache
+- Stream(kafka)
+- k8s (GCP)
