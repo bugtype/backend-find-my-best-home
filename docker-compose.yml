@@ -1,9 +1,9 @@
 version: '3'
 services:
   # mysql
-  mysql:
+  database:
     image: 'mysql:5.7.24'
-    container_name: 'house-mysql'
+    container_name: 'house-database'
     command: --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
     ports:
@@ -14,10 +14,59 @@ services:
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test'
       MYSQL_DATABASE: 'test'
+    networks:
+      - app-network
   # backend
   # TODO: Dockerfile 연동해야함.
   backend:
-    image: 'node:12.13-alpine'
+    build: .
     container_name: 'house-node'
+    environment:
+      TYPEORM_CONNECTION: mysql
+      TYPEORM_HOST: house-database
+      TYPEORM_USERNAME: test
+      TYPEORM_PASSWORD: test
+      TYPEORM_DATABASE: test
+      TYPEORM_PORT: 3306
+      TYPEORM_SYNCHRONIZE: 1
+      TYPEORM_ENTITIES: dist/**/*.entity.ts,dist/**/*.entity.js
+      # TYPEORM_LOGGING: true
     ports:
       - '3000:3000'
+    depends_on:
+      - database
+    networks:
+      - app-network
+  # nginx
+  nginx:
+    container_name: 'house-nginx'
+    build: ./nginx
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - database
+      - backend
+    networks:
+      - app-network
+
+  # filebeat
+  filebeat:
+    build: ./filebeat
+    entrypoint: 'filebeat -e -strict.perms=false'
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./nginx/log:/var/log/nginx
+    networks:
+      - app-network
+      - elk-find-my-best-home_elk
+    depends_on:
+      - nginx
+
+networks:
+  app-network:
+    driver: bridge
+  elk-find-my-best-home_elk:
+    external: true
