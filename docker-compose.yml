@@ -16,11 +16,10 @@ services:
       MYSQL_DATABASE: 'test'
     networks:
       - app-network
-  # backend
-  # TODO: Dockerfile 연동해야함.
-  backend:
-    build: .
-    container_name: 'house-node'
+  # app
+  app:
+    build: ./app
+    container_name: 'house-app'
     environment:
       TYPEORM_CONNECTION: mysql
       TYPEORM_HOST: house-database
@@ -48,12 +47,13 @@ services:
       - '80:80'
     depends_on:
       - database
-      - backend
+      - app
     networks:
       - app-network
 
   # filebeat
   filebeat:
+    container_name: 'house-filebeat'
     build: ./filebeat
     entrypoint: 'filebeat -e -strict.perms=false'
     volumes:
