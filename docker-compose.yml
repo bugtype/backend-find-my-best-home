@@ -15,11 +15,13 @@ services:
       MYSQL_PASSWORD: 'test'
       MYSQL_DATABASE: 'test'
     networks:
-      - app-network
+      - backend
   # app
   app:
     build: ./app
-    container_name: 'house-app'
+    # yml에서 scale 옵션은 3에서 제거되었다.
+    # scale에서는 container_name을 사용하지 못한다.
+    # container_name: 'house-app'
     environment:
       TYPEORM_CONNECTION: mysql
       TYPEORM_HOST: house-database
@@ -31,11 +33,12 @@ services:
       TYPEORM_ENTITIES: dist/**/*.entity.ts,dist/**/*.entity.js
       # TYPEORM_LOGGING: true
     ports:
-      - '3000:3000'
+      - 3000
     depends_on:
       - database
     networks:
-      - app-network
+      - backend
+
   # nginx
   nginx:
     container_name: 'house-nginx'
@@ -49,7 +52,7 @@ services:
       - database
       - app
     networks:
-      - app-network
+      - backend
 
   # filebeat
   filebeat:
@@ -60,13 +63,14 @@ services:
       - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - ./nginx/log:/var/log/nginx
     networks:
-      - app-network
+      - backend
+      # NOTE: elk network 확인
       - elk-find-my-best-home_elk
     depends_on:
       - nginx
 
 networks:
-  app-network:
+  backend:
     driver: bridge
   elk-find-my-best-home_elk:
     external: true
