@@ -7,6 +7,7 @@ export class UsersService {
   private readonly users: User[];
 
   constructor() {
+    // TODO: DB연동 해야함.
     this.users = [
       {
         userId: 1,
