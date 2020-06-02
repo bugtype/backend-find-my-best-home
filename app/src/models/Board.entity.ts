@@ -9,6 +9,9 @@ export class Board {
   subject!: string;
 
   @Column()
+  content!: string;
+
+  @Column()
   userName!: string;
 
   @Column()
