@@ -7,6 +7,10 @@ export class GetBoardDetailDto {
   @ApiProperty()
   subject!: string;
 
+  // detail
+  @ApiProperty()
+  content!: string;
+
   @ApiProperty()
   userName!: string;
 
