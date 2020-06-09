@@ -1,0 +1,12 @@
+
+// 도커에서 host에다가 컨테이너 이름을 넣어도 인식이 안된다...  env로 변경
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "test",
+  "password": "test",
+  "database": "test",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": false
+}
