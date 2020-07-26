@@ -2,17 +2,17 @@
 
 ## 설명
 
-### Flow
+### 프로젝트 흐름
 
 ![](docs/backend-flow.png)
 
-#### Api call
+#### API 요청
 
 1. 유저가 요청을 합니다.
-2. nginx를 통해서 load balancing을 합니다. ( 현재는 layer 7 )
+2. nginx를 통해서 load balancing을 합니다. ( 현재 layer 7 )
 3. app에 응답을 하게 되고, 필요에 따라 DB와 통신을 하며, 유저에게 데이터를 보냅니다.
 
-#### Log
+#### 로그
 
 1. 유저가 요청을 하면 nginx에 로그가 쌓입니다.
 2. nginx 로그는 filebeat와 volume이 공유되어 있습니다.
@@ -24,11 +24,25 @@
 
 ---
 
+## 기술 스택
+
+- NodeJs
+- Docker
+- Mysql
+- Nginx
+- NestJs
+- Swagger
+- ELK (Elasticsearch, Logstash, Kibana)
+
 ## ELK 연동
 
 ### STEP 1
 
 https://github.com/deviantony/docker-elk 를 통해서 ELK를 구축한다.
+
+- Elasticsearch 
+- Logstash 
+- Kibana
 
 ### STEP 2
 
