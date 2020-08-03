@@ -2,7 +2,9 @@ version: '3'
 services:
   # mysql
   database:
-    image: 'mysql:5.7.24'
+    # TODO: 8.0은 NoSQL 기능 지원, auto increment 유지, 새로운 인덱스 기능 3개 추가 되었다고 한다.
+    # 검토후에 변경하기
+    image: 'mysql:5.7.31'
     container_name: 'house-database'
     command: --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
