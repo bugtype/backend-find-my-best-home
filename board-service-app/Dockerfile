@@ -16,4 +16,4 @@ EXPOSE 3000
 
 RUN apk add --update bash
 
-CMD ["./wait-for-it.sh", "house-database:3306", "--","node", "dist/main"]
+CMD ["./wait-for-it.sh", "board-service-database:3306", "--","node", "dist/main"]

@@ -5,9 +5,25 @@
 
 ## 설명
 
+### 목표
+
+- MSA 시스템 아키텍쳐를 목표로 한다.
+
+### Aggregate
+
+- User
+- Board 
+
+
 ### 프로젝트 흐름
 
+#### 현재
+
 ![](docs/backend-flow.png)
+
+
+#### Next (재 설계 - 작업 중)
+![](docs/backend-flow-next.png)
 
 #### API 요청
 
@@ -29,6 +45,9 @@
 
 ## 기술 스택
 
+- API Gateway ( spring cloud zuul )
+- Load balancer ( nginx )
+- Spring boot
 - NodeJs
 - Docker
 - Mysql
@@ -36,6 +55,7 @@
 - NestJs
 - Swagger
 - ELK (Elasticsearch, Logstash, Kibana)
+- Typescript
 
 ## ELK 연동
 
@@ -66,13 +86,13 @@ input {
 
 ---
 
-## 테스트
+## 시작 및 테스트
 
 ### 샘플 데이터
 
 ```
 # 샘플 데이터 생성
-curl -X POST http://localhost/boards
+curl -X POST http://localhost/api/boards
 // 샘플 데이터가 생성되었습니다.
 ```
 
@@ -80,15 +100,14 @@ curl -X POST http://localhost/boards
 
 ```
 # 1. 스케일링
-docker-compose up -d --scale app=10
+docker-compose up -d --scale app=3
 
 # 2. nginx 재시작
-docker exec house-nginx nginx -s reload
+docker exec board-service-nginx nginx -s reload
 
 # 3. 확인
-curl -X GET http://localhost
-// appId : 373682 / Hello World!
-// appId : 457576 / Hello World!
+# board service LB
+curl -X GET http://localhost:8000/api/boards
 ```
 
 ## API 확인
@@ -96,13 +115,14 @@ curl -X GET http://localhost
 http://localhost/api
 
 ```
-curl -X GET http://localhost/boards?page=1
+curl -X GET http://localhost/api/boards?page=1
 ```
 
 ---
 
 ## TODO (?)
 
+- user service 구현
 - CI/CD
 - DDD
 - CQRS, Event Sourcing
