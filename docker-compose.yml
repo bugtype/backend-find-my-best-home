@@ -1,32 +1,26 @@
 version: '3'
+
 services:
   # mysql
-  database:
+  board-service-database:
     # TODO: 8.0은 NoSQL 기능 지원, auto increment 유지, 새로운 인덱스 기능 3개 추가 되었다고 한다.
     # 검토후에 변경하기
-    image: 'mysql:5.7.31'
-    container_name: 'house-database'
-    command: --character-set-server=utf8mb4
-      --collation-server=utf8mb4_unicode_ci
+    container_name: 'board-service-database'
+    build: ./board-service-database
     ports:
       - '3306:3306'
-    # TODO: env 처리해야함.
-    environment:
-      MYSQL_ROOT_PASSWORD: 'admin'
-      MYSQL_USER: 'test'
-      MYSQL_PASSWORD: 'test'
-      MYSQL_DATABASE: 'test'
     networks:
       - backend
   # app
-  app:
-    build: ./app
+  board-service-app:
+    container_name: 'board-service-app'
+    build: ./board-service-app
     # yml에서 scale 옵션은 3에서 제거되었다.
     # scale에서는 container_name을 사용하지 못한다.
     # container_name: 'house-app'
     environment:
       TYPEORM_CONNECTION: mysql
-      TYPEORM_HOST: house-database
+      TYPEORM_HOST: board-service-database
       TYPEORM_USERNAME: test
       TYPEORM_PASSWORD: test
       TYPEORM_DATABASE: test
@@ -37,22 +31,22 @@ services:
     ports:
       - 3000
     depends_on:
-      - database
+      - board-service-database
     networks:
       - backend
 
   # nginx
-  nginx:
-    container_name: 'house-nginx'
-    build: ./nginx
+  board-service-nginx:
+    container_name: 'board-service-nginx'
+    build: ./board-service-nginx
     volumes:
-      - ./nginx/config:/etc/nginx/conf.d
-      - ./nginx/log:/var/log/nginx
+      - ./board-service-nginx/config:/etc/nginx/conf.d
+      - ./board-service-nginx/log:/var/log/nginx
     ports:
       - '8000:8000'
     depends_on:
-      - database
-      - app
+      - board-service-database
+      - board-service-app
     networks:
       - backend
 
@@ -61,13 +55,11 @@ services:
     container_name: 'api-gateway'
     build: ./api-gateway
     environment:
-      zuul.routes.board.url: http://nginx:8000
+      zuul.routes.boards.url: http://board-service-nginx:8000/boards
     ports:
       - '80:80'
     depends_on:
-      - database
-      - app
-      - nginx
+      - board-service-nginx
     networks:
       - backend
 
