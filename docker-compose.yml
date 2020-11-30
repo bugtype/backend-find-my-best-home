@@ -56,20 +56,35 @@ services:
     networks:
       - backend
 
-  # filebeat
-  filebeat:
-    container_name: 'house-filebeat'
-    build: ./filebeat
-    entrypoint: 'filebeat -e -strict.perms=false'
-    volumes:
-      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./nginx/log:/var/log/nginx
+  # api-gateway
+  api-gateway:
+    container_name: 'api-gateway'
+    build: ./api-gateway
+    environment:
+      zuul.routes.board.url: http://nginx:8000
+    ports:
+      - '80:80'
+    depends_on:
+      - database
+      - app
+      - nginx
     networks:
       - backend
-      # NOTE: elk network 확인
-      - elk-find-my-best-home_elk
-    depends_on:
-      - nginx
+
+  # filebeat TODO: 로드밸런서 마다 넣어야함.
+  # filebeat:
+  #   container_name: 'house-filebeat'
+  #   build: ./filebeat
+  #   entrypoint: 'filebeat -e -strict.perms=false'
+  #   volumes:
+  #     - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+  #     - ./nginx/log:/var/log/nginx
+  #   networks:
+  #     - backend
+  #     # NOTE: elk network 확인
+  #     - elk-find-my-best-home_elk
+  #   depends_on:
+  #     - nginx
 
 networks:
   backend:

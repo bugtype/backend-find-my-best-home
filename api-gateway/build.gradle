@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.3.7.BUILD-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'com.palantir.docker' version '0.22.1'
+	id 'com.google.cloud.tools.jib' version '1.0.0'
 }
 
 group = 'com.bugtype'
@@ -16,6 +18,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "Hoxton.BUILD-SNAPSHOT")
+	BUILD_VERSION = new Date().format("yyyyMMddHHmmss") 
 }
 
 dependencies {
@@ -33,4 +36,11 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+docker {
+    name "com.bugtype.apigateway"
+    tags "${project.version}", "${BUILD_VERSION}"
+    files tasks.bootJar.outputs.files
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
 }

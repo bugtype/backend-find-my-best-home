@@ -1,4 +1,4 @@
-package com.bugtype.service.user.controller;
+package com.bugtype.apigateway.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
