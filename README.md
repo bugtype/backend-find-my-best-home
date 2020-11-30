@@ -7,7 +7,13 @@
 
 ### 프로젝트 흐름
 
+#### 현재
+
 ![](docs/backend-flow.png)
+
+
+#### Next (재 설계 - 작업 중)
+![](docs/backend-flow-next.png)
 
 #### API 요청
 
