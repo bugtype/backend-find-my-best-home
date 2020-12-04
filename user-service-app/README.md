@@ -25,7 +25,10 @@ create table user (
 
 - 질문 ?  : facebook처럼 비밀번호 유사도 검사를 이용하여 로그인을 어떻게 하지??
 
+### Graceful shutdown
 
+- 작업중인 것을 완료하고 종료하게 처리. 
+- Spring boot 2.3부터는 application.yml에 추가하면 된다. 😎
 
 ### TODO
 
