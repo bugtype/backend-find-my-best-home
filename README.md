@@ -3,18 +3,6 @@
 
 # Backend API
 
-## 설명
-
-### 목표
-
-- MSA 시스템 아키텍쳐를 목표로 한다.
-
-### Aggregate
-
-- User
-- Board 
-
-
 ### 프로젝트 흐름
 
 #### 현재
@@ -24,6 +12,28 @@
 
 #### Next (재 설계 - 작업 중)
 ![](docs/backend-flow-next.png)
+
+
+#### Folder 
+
+- `api-gateway` - Spring Cloud Zuul 를 이용하여 구현. 인증, 로깅 등을 할 예정이다.
+
+- Board-service
+  
+  - `board-service-nginx` - nginx를 이용하여 load balancing을 하였다. ( 폴더 명 변경 예정 ) 
+  
+  - `board-service-app` - nextJs를 이용하여 구현하였다. Spring 처럼 어노테이션, DI 등이 가능하다.
+
+  - `board-service-database` - Mysql, 유저입장에서 자주사용하는 곳이므로 Cache 용도로 Redis응 별도록 만들 예정이다.
+  
+- User Service
+
+  - `user-service-app` - User 관련을 조회한다. 현재 db는 임시로 h2를 이용하여 구현하였다.
+
+  - `user-service-proxy` - User 서비스를 load balancing 용도로 만들 예정이다. HAProxy
+
+- `filebeat` - 지금은 사용 X, 예전 인프라에서 nginx 로깅에 사용하였다.
+ 
 
 #### API 요청
 
@@ -92,7 +102,7 @@ input {
 
 ```
 # 샘플 데이터 생성
-curl -X POST http://localhost/api/boards
+curl -X POST http://localhost/api d
 // 샘플 데이터가 생성되었습니다.
 ```
 
