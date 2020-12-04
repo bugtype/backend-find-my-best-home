@@ -1,12 +1,8 @@
 package com.bugtype.service.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Builder
 @Entity
@@ -24,4 +20,8 @@ public class User {
 
     @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(nullable = false, length = 100)
+    @Setter()
+    private String password;
 }
