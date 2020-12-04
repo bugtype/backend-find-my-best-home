@@ -24,11 +24,11 @@
   
   - `board-service-app` - nextJs를 이용하여 구현하였다. Spring 처럼 어노테이션, DI 등이 가능하다.
 
-  - `board-service-database` - Mysql, 유저입장에서 자주사용하는 곳이므로 Cache 용도로 Redis응 별도록 만들 예정이다.
+  - `board-service-database` - Mysql, 유저입장에서 자주사용하는 곳이므로 Cache 용도로 Redis응 별도록 만들 예정이다. [README](board-service-database/README.md)
   
 - User Service
 
-  - `user-service-app` - User 관련을 조회한다. 현재 db는 임시로 h2를 이용하여 구현하였다.
+  - `user-service-app` - User 관련을 조회한다. 현재 db는 임시로 h2를 이용하여 구현하였다. [README](user-service-app/README.md)
 
   - `user-service-proxy` - User 서비스를 load balancing 용도로 만들 예정이다. HAProxy
 
