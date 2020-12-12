@@ -30,7 +30,13 @@ create table user (
 - 작업중인 것을 완료하고 종료하게 처리. 
 - Spring boot 2.3부터는 application.yml에 추가하면 된다. 😎
 
+
+### DDD(Domain Driven Design)이용하여 구조 변경
+
+![](docs/ddd.png)
+
+- User
+
 ### TODO
 
 - Database mysql로 변경
-- DDD 좀 더 공부 후에, DDD 적용해보기
