@@ -1,4 +1,4 @@
-package com.bugtype.service.user.entity;
+package com.bugtype.service.user.domain.entity;
 
 import lombok.*;
 

@@ -1,9 +1,11 @@
-package com.bugtype.service.user.controller;
+package com.bugtype.service.user.adapter.presentation.controller;
 
-import com.bugtype.service.user.dto.UserDto;
-import com.bugtype.service.user.entity.User;
-import com.bugtype.service.user.service.UserServiceImpl;
+import com.bugtype.service.user.adapter.dto.UserDto;
+import com.bugtype.service.user.application.service.UserService;
+import com.bugtype.service.user.domain.entity.User;
+import com.bugtype.service.user.application.service.DomainUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,7 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/v1")
 public class UserController {
-    private final UserServiceImpl userService;
+
+    @Autowired
+    private final UserService userService;
 
     @GetMapping(value = "/users")
     public List<User> findAllUser() {
