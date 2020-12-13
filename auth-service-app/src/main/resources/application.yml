@@ -1,0 +1,12 @@
+server:
+    port: 1001
+    shutdown: graceful
+spring:
+    datasource:
+        url: jdbc:h2:tcp://localhost/~/auth-db
+        driver-class-name: org.h2.Driver
+        username: auth
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        properties.hibernate.hbm2ddl.auto: update
+        showSql: true
