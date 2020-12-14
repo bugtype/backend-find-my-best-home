@@ -1,11 +1,13 @@
 package com.bugtype.service.user.adapter.presentation.controller;
 
-import com.bugtype.service.user.adapter.dto.UserDto;
 import com.bugtype.service.user.application.service.UserService;
 import com.bugtype.service.user.domain.entity.User;
-import com.bugtype.service.user.application.service.DomainUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,13 +27,16 @@ public class UserController {
     }
 
     @PostMapping(value = "/users")
-    public User save(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity save(@RequestBody @Valid UserParam userParam) {
         User user = User.builder()
-                .userId(userDto.getEmail())
-                .name(userDto.getName())
-                .password(userDto.getPassword())
+                .userId(userParam.getEmail())
+                .name(userParam.getName())
+                .password(userParam.getPassword())
                 .build();
-        return userService.save(user);
+        userService.save(user);
+
+        // TODO: response template
+        return ResponseEntity.ok("{}");
 
     }
 }
