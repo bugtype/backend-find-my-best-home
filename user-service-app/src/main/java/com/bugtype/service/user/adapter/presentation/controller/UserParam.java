@@ -1,4 +1,4 @@
-package com.bugtype.service.user.adapter.dto;
+package com.bugtype.service.user.adapter.presentation.controller;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Getter
 //@NoArgsConstructor
 //@AllArgsConstructor
-public class UserDto {
+public class UserParam {
 
     @NotNull
     @Size(min = 5,max = 100)
