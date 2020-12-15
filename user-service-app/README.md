@@ -35,7 +35,30 @@ create table user (
 
 ![](docs/ddd.png)
 
-- User
+
+Folder structure
+```
+📦 package
+┃ 📦 adapter
+┃  ┣ 📂 infrastructure
+┃  ┃ ┗ 📂 jpa
+┃  ┃   ┗ 📜 JpaUserRepository.java
+┃  ┣ 📂 presentation
+┃  ┃ ┗ 📂 controller
+┃  ┃   ┗ 📜 UserController.java
+┃  ┗ 📂 service
+┃ 📦 application 
+┃  ┣ 📂 application
+┃  ┃  ┣ 📂 service
+┃  ┣ 📂 domain
+┃  ┃  ┣ 📂 entity
+┃  ┃  ┣ 📂 repo
+┃ 📦 domain 
+┃  ┣ 📂 entity
+┃  ┗ 📂 repository
+
+
+```
 
 ### TODO
 
